@@ -1,12 +1,12 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import "./Login.css";
-import { authContext } from "../AuthContext";
+import { useAuthContext } from "../AuthContext";
 import { Navigate } from "react-router-dom";
 
 export function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { logIn, loggedIn } = useContext(authContext);
+  const { logIn, loggedIn } = useAuthContext();
 
   function handleLogInClick() {
     logIn(email, password);

@@ -1,5 +1,5 @@
 import firebase from "firebase/compat";
-import React, { PropsWithChildren, useState } from "react";
+import React, { PropsWithChildren, useContext, useState } from "react";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -15,7 +15,7 @@ interface AuthContext {
   register: (email: string, password: string) => void;
 }
 
-export const authContext = React.createContext<AuthContext>({
+const authContext = React.createContext<AuthContext>({
   user: null,
   loggedIn: false,
   logIn: () => {},
@@ -62,4 +62,8 @@ export const AuthContextProvider = (props: PropsWithChildren) => {
       {props.children}
     </authContext.Provider>
   );
+};
+
+export const useAuthContext = () => {
+  return useContext(authContext);
 };

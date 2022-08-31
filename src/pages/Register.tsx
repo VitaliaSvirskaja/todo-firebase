@@ -1,10 +1,10 @@
-import { authContext } from "../AuthContext";
-import { useContext, useState } from "react";
+import { useAuthContext } from "../AuthContext";
+import { useState } from "react";
 
 export const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { register } = useContext(authContext);
+  const { register } = useAuthContext();
 
   function handleRegisterClick() {
     register(email, password);
