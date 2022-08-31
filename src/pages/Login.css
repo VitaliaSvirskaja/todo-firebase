@@ -34,8 +34,15 @@
 
 .card {
   padding: 2em;
+  background-color: lightcyan;
 }
 
 .read-the-docs {
   color: #888;
+}
+
+
+.form {
+  width: fit-content;
+  height: fit-content;
 }
