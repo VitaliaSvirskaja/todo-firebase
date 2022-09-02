@@ -42,9 +42,6 @@ export const Home = () => {
       <div>Welcome to your personal pomodoro</div>
       <button onClick={handleLogOut}>Log Out</button>
       <div>
-        <button onClick={getUserData}>Get User</button>
-      </div>
-      <div>
         <label htmlFor="name">Name: </label>
         <input
           type="text"
