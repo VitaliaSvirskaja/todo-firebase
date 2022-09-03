@@ -6,6 +6,7 @@ import {
 } from "firebase/auth";
 import { firebaseAuth } from "./firebase/firebase";
 import UserInfo = firebase.UserInfo;
+import { API } from "./API";
 
 interface AuthContext {
   user: UserInfo | null;
@@ -41,12 +42,17 @@ export const AuthContextProvider = (props: PropsWithChildren) => {
   }
 
   async function register(email: string, password: string) {
-    const userCredential = await createUserWithEmailAndPassword(
-      firebaseAuth,
-      email,
-      password
-    );
-    setFirebaseUser(userCredential.user);
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        firebaseAuth,
+        email,
+        password
+      );
+      setFirebaseUser(userCredential.user);
+      await API.createToDosField(userCredential.user.uid);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (

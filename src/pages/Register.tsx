@@ -1,13 +1,16 @@
 import { useAuthContext } from "../AuthContext";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { register } = useAuthContext();
+  const navigate = useNavigate();
 
   function handleRegisterClick() {
     register(email, password);
+    navigate("/login");
   }
 
   function handlePasswordChange(event: React.ChangeEvent<HTMLInputElement>) {
