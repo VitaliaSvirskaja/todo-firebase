@@ -4,14 +4,13 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { db, firebaseAuth } from "./firebase/firebase";
+import { firebaseAuth } from "./firebase/firebase";
 import UserInfo = firebase.UserInfo;
-import { doc, setDoc } from "firebase/firestore";
+import { API } from "./API";
 
 interface AuthContext {
   user: UserInfo | null;
   loggedIn: boolean;
-  todo: Array<string>;
   logIn: (email: string, password: string) => void;
   logOut: () => void;
   register: (email: string, password: string) => void;
@@ -20,7 +19,6 @@ interface AuthContext {
 const authContext = React.createContext<AuthContext>({
   user: null,
   loggedIn: false,
-  todo: [],
   logIn: () => {},
   logOut: () => {},
   register: () => {},
@@ -51,8 +49,7 @@ export const AuthContextProvider = (props: PropsWithChildren) => {
         password
       );
       setFirebaseUser(userCredential.user);
-      const users = doc(db, "users", userCredential.user.uid);
-      await setDoc(users, { email: userCredential.user.email, todo: [] });
+      await API.createToDosField(userCredential.user.uid);
     } catch (error) {
       console.log(error);
     }
@@ -63,7 +60,6 @@ export const AuthContextProvider = (props: PropsWithChildren) => {
       value={{
         user: firebaseUser,
         loggedIn: !!firebaseUser,
-        todo: [],
         logIn: logIn,
         logOut: logOut,
         register: register,
