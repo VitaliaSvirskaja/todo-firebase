@@ -6,7 +6,7 @@ import { useToDos } from "../useToDos";
 
 export const Home = () => {
   const { loggedIn, logOut } = useAuthContext();
-  const { newTodo, allToDos, changeTodo, handleNewTodo, handleDeleteToDo } =
+  const { newTodo, allToDos, changeTodoInput, handleNewTodo, removeToDo } =
     useToDos();
 
   function handleLogOut() {
@@ -24,7 +24,12 @@ export const Home = () => {
 
       <div>
         <label htmlFor="todo">New Todo: </label>
-        <input type="text" id="todo" onChange={changeTodo} value={newTodo} />
+        <input
+          type="text"
+          id="todo"
+          onChange={changeTodoInput}
+          value={newTodo}
+        />
         <button onClick={handleNewTodo}>Add todo</button>
       </div>
 
@@ -38,7 +43,7 @@ export const Home = () => {
                 src={deleteIcon}
                 alt="deleteIcon"
                 className={styles.deleteIcon}
-                onClick={() => handleDeleteToDo(todo)}
+                onClick={() => removeToDo(todo)}
               />
             </li>
           ))}

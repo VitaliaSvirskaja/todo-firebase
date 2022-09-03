@@ -12,7 +12,6 @@ export function useToDos() {
   }, []);
 
   async function fetchAllTodos() {
-    console.log(fetchAllTodos.name);
     if (!user) {
       return;
     }
@@ -20,7 +19,7 @@ export function useToDos() {
     setAllToDos(allFirebaseToDos);
   }
 
-  function changeTodo(input: React.ChangeEvent<HTMLInputElement>) {
+  function changeTodoInput(input: React.ChangeEvent<HTMLInputElement>) {
     const newTodo = input.target.value;
     setNewTodo(newTodo);
   }
@@ -33,27 +32,25 @@ export function useToDos() {
       setNewTodo("");
     } else {
       await API.updateTodosUnion(user.uid, newTodo);
-      setAllToDos([...allToDos, newTodo]);
+      await fetchAllTodos();
       setNewTodo("");
     }
   }
 
-  async function handleDeleteToDo(todoName: string) {
-    const newToDos: Array<string> = allToDos.filter(
-      (todo) => todoName !== todo
-    );
-    setAllToDos(newToDos);
+  async function removeTodo(todoName: string) {
     if (!user) {
       return;
     }
+
     await API.updateTodosRemove(user?.uid, todoName);
+    await fetchAllTodos();
   }
 
   return {
     newTodo: newTodo,
     allToDos: allToDos,
-    changeTodo: changeTodo,
-    handleDeleteToDo: handleDeleteToDo,
+    changeTodoInput: changeTodoInput,
+    removeToDo: removeTodo,
     handleNewTodo: handleNewTodo,
   };
 }

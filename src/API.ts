@@ -9,8 +9,8 @@ import {
 import { db } from "./firebase/firebase";
 
 async function createToDosField(userID: string) {
-  const users = doc(db, "users", userID);
-  await setDoc(users, { todos: [] });
+  const userDocRef = doc(db, "users", userID);
+  await setDoc(userDocRef, { todos: [] });
 }
 
 async function getAllToDos(userID: string): Promise<string[]> {
